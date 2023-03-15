@@ -6,6 +6,8 @@ public class Classroom implements Calculation{
     private final String name;
     private final List<String> studentsGrade;
 
+
+
     public Classroom(String name, List<String> studentsGrade) {
         this.name = name;
         this.studentsGrade = studentsGrade;
@@ -16,6 +18,8 @@ public class Classroom implements Calculation{
 
         str += "Nama Kelas: ".concat(name);
         str += "Rata-rata: ".concat(String.valueOf(getMean()));
+        str += "Modus: ".concat(String.valueOf(getModus()));
+        str += "Median: ".concat(String.valueOf(getMedian()));
 
 
         return str;
