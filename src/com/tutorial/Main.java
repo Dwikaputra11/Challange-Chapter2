@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Main {
 
-    private final static String path = "C:\\dev\\Java\\Binar Academy\\Git Config\\Challange-Chapter2\\res\\data_sekolah.csv";
+    private static final String path = "C:\\dev\\Java\\Binar Academy\\Git Config\\Challange-Chapter2\\res\\data_sekolah.csv";
 
     public static void main(String[] args) {
         try {
