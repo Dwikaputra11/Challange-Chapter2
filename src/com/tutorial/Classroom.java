@@ -1,5 +1,6 @@
 package com.tutorial;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Classroom implements Calculation{
@@ -12,15 +13,14 @@ public class Classroom implements Calculation{
         this.name = name;
         this.studentsGrade = studentsGrade;
     }
-
     public String generateClassTxt(){
         var str = "";
 
-        str += "Nama Kelas: ".concat(name);
+        str += "Nama Kelas: ".concat(this.name);
         str += "Rata-rata: ".concat(String.valueOf(getMean()));
-        str += "Modus: ".concat(String.valueOf(getModus()));
-        str += "Median: ".concat(String.valueOf(getMedian()));
-
+        //str += "Modus: ".concat(String.valueOf(getModus()));
+        //str += "Median: ".concat(getMedian());
+        str += studentsGrade.toString();
 
         return str;
     }
