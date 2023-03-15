@@ -6,12 +6,12 @@ import java.util.List;
 
 public class Main {
 
-    private static final String GRADE_FILE_PATH = "C:\\dev\\Java\\Binar Academy\\Git Config\\Challange-Chapter2\\res\\data_sekolah.csv";
-    private static String SCHOOL_FILE_PATH = "C:\\dev\\Java\\Binar Academy\\Git Config\\Challange-Chapter2\\res\\data_sekolah.txt";
-    private static String CLASS_FILE_PATH = "C:\\dev\\Java\\Binar Academy\\Git Config\\Challange-Chapter2\\res\\data_per_kelas.txt";
-    private static List<Classroom> classroomList = new ArrayList<>();
-    private static List<String> className = new ArrayList<>();
-    private static List<String> gradeByClass = new ArrayList<>();
+    private static final String GRADE_FILE_PATH         = "C:\\dev\\Java\\Binar Academy\\Git Config\\Challange-Chapter2\\res\\data_sekolah.csv";
+    private static final String SCHOOL_FILE_PATH        = "C:\\dev\\Java\\Binar Academy\\Git Config\\Challange-Chapter2\\res\\data_sekolah.txt";
+    private static final String CLASS_FILE_PATH         = "C:\\dev\\Java\\Binar Academy\\Git Config\\Challange-Chapter2\\res\\data_per_kelas.txt";
+    private static final List<Classroom> classroomList  = new ArrayList<>();
+    private static final List<String> className         = new ArrayList<>();
+    private static final List<String> gradeByClass      = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
         readFile();

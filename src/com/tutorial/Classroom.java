@@ -10,11 +10,10 @@ public class Classroom implements Calculation{
     private final Map<String, Integer> grades = new HashMap<>();
 
     public Classroom(String name, List<String> studentsGrade) {
-        this.name = name;
-
+        this.name           = name;
         // sort grade toi find median
-        studentsGrade = sortAsNumbers(studentsGrade);
-        this.studentsGrade = studentsGrade;
+        studentsGrade       = sortAsNumbers(studentsGrade);
+        this.studentsGrade  = studentsGrade;
 
         for(String i: studentsGrade){
             if(grades.containsKey(i)) grades.put(i, grades.get(i) + 1);

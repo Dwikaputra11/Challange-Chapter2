@@ -53,21 +53,20 @@ public class School implements Calculation{
     }
 
     public String writeSchoolTxt(){
-        StringBuilder str = new StringBuilder("Berikut Hasil Pengolahan Nilai\n\n");
+        StringBuilder str = new StringBuilder("Berikut Hasil Rekap Nilai Ujian Sekolah\n\n");
 
+        str.append("Mean\t\t: ").append(getMean()).append("\n");
+        str.append("Modus(n)\t: ").append(getModus()).append("\n");
+        str.append("Median\t\t: ").append(getMedian()).append("\n\n");
+        str.append("*n = banyak data\n\n");
+
+        str.append("Sebaran Nilai Seluruh Siswa:\n");
         str.append("Nilai\t| Frekuensi\n");
-
         for (Map.Entry<String,Integer> entry : grades.entrySet()) {
             String key = entry.getKey();
             int value = entry.getValue();
             str.append(key).append("\t\t| ").append(value).append("\n");
         }
-
-        str.append("\nBerikut hasil rekap nilai ujian sekolah\n\n");
-        str.append("Mean\t\t: ").append(getMean()).append("\n");
-        str.append("Modus(n)\t: ").append(getModus()).append("\n");
-        str.append("Median\t\t: ").append(getMedian()).append("\n\n");
-        str.append("*n = banyak data\n");
 
         str.append("\nDaftar nama kelas:\n");
         for(String name: classesName){
