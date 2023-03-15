@@ -3,13 +3,17 @@ package com.tutorial;
 import java.util.*;
 
 public class School implements Calculation{
-    private List<String> classesName;
+    private final List<String> classesName;
     private final List<String> gradeByClass;
     private final Map<String, Integer> grades = new HashMap<>();
 
     public School(List<String> classesName, List<String> gradeByClass) {
         this.classesName    = classesName;
+
+        // sort grade to find modus and median
+        gradeByClass        = sortAsNumbers(gradeByClass);
         this.gradeByClass   = gradeByClass;
+
         for(String i: gradeByClass){
             if(grades.containsKey(i)) grades.put(i, grades.get(i) + 1);
             else grades.put(i, 1);
@@ -29,8 +33,17 @@ public class School implements Calculation{
     }
 
     @Override
-    public int getModus() {
-        return Collections.max(grades.values());
+    public String getModus() {
+        var maxVal = 0;
+        var maxKey = "";
+        for (Map.Entry<String,Integer> entry : grades.entrySet()) {
+            if(maxVal < entry.getValue()){
+                maxVal = entry.getValue();
+                maxKey = entry.getKey();
+            }
+        }
+
+        return maxKey + " (" + maxVal + ")";
     }
 
     @Override
@@ -42,22 +55,25 @@ public class School implements Calculation{
     public String writeSchoolTxt(){
         StringBuilder str = new StringBuilder("Berikut Hasil Pengolahan Nilai\n\n");
 
-        str.append("Nilai\t| Frekuensi");
+        str.append("Nilai\t| Frekuensi\n");
 
         for (Map.Entry<String,Integer> entry : grades.entrySet()) {
             String key = entry.getKey();
             int value = entry.getValue();
-            str.append(key).append("\t| ").append(value);
+            str.append(key).append("\t\t| ").append(value).append("\n");
         }
 
-        str.append("Berikut hasil rekap nilai ujian sekolah\n\n");
-        str.append("Mean: ").append(getMean());
-        str.append("Modus: ").append(getModus());
-        str.append("Median: ").append(getMedian());
+        str.append("\nBerikut hasil rekap nilai ujian sekolah\n\n");
+        str.append("Mean\t\t: ").append(getMean()).append("\n");
+        str.append("Modus(n)\t: ").append(getModus()).append("\n");
+        str.append("Median\t\t: ").append(getMedian()).append("\n\n");
+        str.append("*n = banyak data\n");
+
+        str.append("\nDaftar nama kelas:\n");
+        for(String name: classesName){
+            str.append("- ").append(name).append("\n");
+        }
 
         return str.toString();
     }
-
-
-
 }

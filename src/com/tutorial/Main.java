@@ -6,52 +6,51 @@ import java.util.List;
 
 public class Main {
 
-    private static final String path = "C:\\dev\\Java\\Binar Academy\\Git Config\\Challange-Chapter2\\res\\data_sekolah.csv";
-    private static String pathNewFileDirectory = "C:\\dev\\Java\\Binar Academy\\Git Config\\Challange-Chapter2\\res";
+    private static final String GRADE_FILE_PATH = "C:\\dev\\Java\\Binar Academy\\Git Config\\Challange-Chapter2\\res\\data_sekolah.csv";
+    private static String SCHOOL_FILE_PATH = "C:\\dev\\Java\\Binar Academy\\Git Config\\Challange-Chapter2\\res\\data_sekolah.txt";
+    private static String CLASS_FILE_PATH = "C:\\dev\\Java\\Binar Academy\\Git Config\\Challange-Chapter2\\res\\data_per_kelas.txt";
     private static List<Classroom> classroomList = new ArrayList<>();
+    private static List<String> className = new ArrayList<>();
+    private static List<String> gradeByClass = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
         readFile();
         // menu 1 tampilkan rekap nilai per kelas
         // menu 2 tampilkan rekap nilai sekolah
         // menu 3 keluar
-//        writeFile();
+
+        School school = new School(className, gradeByClass);
+        writeFile(SCHOOL_FILE_PATH, school.writeSchoolTxt());
+
+        var txt = new StringBuilder();
+        txt.append("Berikut Rekap Nilai Setiap Kelas:\n\n");
+        for(Classroom c: classroomList){
+            txt.append(c.generateClassTxt());
+        }
+        txt.append("*n = banyak data\n");
+        writeFile(CLASS_FILE_PATH, txt.toString());
     }
 
     private static void readFile() throws IOException {
         BufferedReader br = null;
         try {
-            File file = new File(path);
+            File file = new File(GRADE_FILE_PATH);
             FileReader fr = new FileReader(file);
             br = new BufferedReader(fr);
             String line;
             List<String> strArr = new ArrayList<>();
-//            List<String> className = new ArrayList<>();
 
             while ((line = br.readLine()) != null) {
-                var value = 0;
-                var count = 0;
-                strArr.addAll(List.of(line.split(";")));
+                var list = List.of(line.split(";"));
+                strArr.addAll(list);
                 var name = strArr.get(0);
+                className.add(name);
                 strArr.remove(0);
-
                 classroomList.add(new Classroom(name, strArr));
-
-//                for (String str : strArr) {
-//                    if (strArr[0].equals(str)) {
-//                        className.add(str);
-//                    } else {
-//                        System.out.print(str + " ");
-//                        value += Integer.parseInt(str);
-//                        count++;
-//                    }
-//                }
-
-//                System.out.println("\nvalue: " + value);
-//                System.out.println("count: " + count);
+                gradeByClass.addAll(strArr);
+                strArr.clear();
             }
 
-//            System.out.println("Kelas: " + className);
             br.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,7 +59,7 @@ public class Main {
         }
     }
 
-    public void writeFile(String txtFile, String txt) throws IOException {
+    public static void writeFile(String txtFile, String txt) throws IOException {
         BufferedWriter bwr = null;
         try {
             File file = new File(txtFile);

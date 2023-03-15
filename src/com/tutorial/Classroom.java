@@ -1,64 +1,58 @@
 package com.tutorial;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Classroom implements Calculation{
     private final String name;
     private final List<String> studentsGrade;
-
-
+    private final Map<String, Integer> grades = new HashMap<>();
 
     public Classroom(String name, List<String> studentsGrade) {
         this.name = name;
+
+        // sort grade toi find median
+        studentsGrade = sortAsNumbers(studentsGrade);
         this.studentsGrade = studentsGrade;
+
+        for(String i: studentsGrade){
+            if(grades.containsKey(i)) grades.put(i, grades.get(i) + 1);
+            else grades.put(i, 1);
+        }
     }
 
     public String generateClassTxt(){
-        var str = "";
-
-        str += "Nama Kelas: ".concat(name);
-        str += "Rata-rata: ".concat(String.valueOf(getMean()));
-        str += "Modus: ".concat(String.valueOf(getModus()));
-        str += "Median: ".concat(String.valueOf(getMedian()));
-
-
-        return str;
+        return "Nama Kelas\t: ".concat(name).concat("\n") +
+                "Rata-Rata\t: ".concat(String.valueOf(getMean()).concat("\n")) +
+                "Modus(n)\t: ".concat(String.valueOf(getModus())).concat("\n") +
+                "Median\t\t: ".concat(String.valueOf(getMedian())).concat("\n\n");
     }
+
     @Override
     public double getMean(){
         var value = 0.0;
         var count = studentsGrade.size();
 
         for(String str: studentsGrade){
-            if(!str.equals(studentsGrade.get(0))){
-                value += Double.parseDouble(str);
-            }
+            value += Integer.parseInt(str);
         }
+
         return (count > 0) ? value/count : 0;
     }
 
     @Override
-    public int getModus(){
-        var max = 0;
-        var tempGrade = studentsGrade.get(0);
-        var gradeModus = studentsGrade.get(0);
-        var gradeAppear = 0;
-
-        for(String grade : studentsGrade){
-            if(grade.equals(tempGrade)){
-                gradeAppear++;
-            }else{
-                gradeAppear = 0;
-                tempGrade = grade;
-            }
-
-            if(gradeAppear > max) {
-                max = gradeAppear;
-                gradeModus = tempGrade;
+    public String getModus(){
+        var maxVal = 0;
+        var maxKey = "";
+        for (Map.Entry<String,Integer> entry : grades.entrySet()) {
+            if(maxVal < entry.getValue()){
+                maxVal = entry.getValue();
+                maxKey = entry.getKey();
             }
         }
 
-        return Integer.parseInt(gradeModus);
+        return maxKey + " (" + maxVal + ")";
     }
 
     @Override
