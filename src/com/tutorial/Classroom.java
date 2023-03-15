@@ -1,10 +1,12 @@
 package com.tutorial;
 
-public class Classroom {
-    private String name;
-    private String[] studentsGrade;
+import java.util.List;
 
-    public Classroom(String name, String[] studentsGrade) {
+public class Classroom implements Calculation{
+    private final String name;
+    private final List<String> studentsGrade;
+
+    public Classroom(String name, List<String> studentsGrade) {
         this.name = name;
         this.studentsGrade = studentsGrade;
     }
@@ -18,31 +20,47 @@ public class Classroom {
 
         return str;
     }
-
+    @Override
     public double getMean(){
         var value = 0.0;
-        var count = 0.0;
+        var count = studentsGrade.size();
 
         for(String str: studentsGrade){
-            if(!str.equals(studentsGrade[0])){
+            if(!str.equals(studentsGrade.get(0))){
                 value += Double.parseDouble(str);
-                count++;
             }
         }
-        return value/count;
+        return (count > 0) ? value/count : 0;
     }
 
-    public double getModus(){
-        var value = 0.0;
-        var count = 0.0;
+    @Override
+    public int getModus(){
+        var max = 0;
+        var tempGrade = studentsGrade.get(0);
+        var gradeModus = studentsGrade.get(0);
+        var gradeAppear = 0;
 
-        for(String str: studentsGrade){
-            if(!str.equals(studentsGrade[0])){
-                value += Double.parseDouble(str);
-                count++;
+        for(String grade : studentsGrade){
+            if(grade.equals(tempGrade)){
+                gradeAppear++;
+            }else{
+                gradeAppear = 0;
+                tempGrade = grade;
+            }
+
+            if(gradeAppear > max) {
+                max = gradeAppear;
+                gradeModus = tempGrade;
             }
         }
-        return value/count;
+
+        return Integer.parseInt(gradeModus);
+    }
+
+    @Override
+    public String getMedian() {
+        int mid = studentsGrade.size()/2;
+        return studentsGrade.get(mid);
     }
 
 }

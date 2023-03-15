@@ -1,32 +1,30 @@
 package com.tutorial;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Main {
 
     private static final String path = "C:\\dev\\Java\\Binar Academy\\Git Config\\Challange-Chapter2\\res\\data_sekolah.csv";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = null;
         try {
             File file = new File(path);
             FileReader fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
+            br = new BufferedReader(fr);
             String line;
             String[] strArr;
             ArrayList<String> className = new ArrayList<>();
 
-            while ((line = br.readLine()) != null){
+            while ((line = br.readLine()) != null) {
                 var value = 0;
                 var count = 0;
                 strArr = line.split(";");
-                for(String str: strArr){
-                    if(strArr[0].equals(str)){
+                for (String str : strArr) {
+                    if (strArr[0].equals(str)) {
                         className.add(str);
-                    }else{
+                    } else {
                         System.out.print(str + " ");
                         value += Integer.parseInt(str);
                         count++;
@@ -38,10 +36,31 @@ public class Main {
 
             System.out.println("Kelas: " + className);
             br.close();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if(br != null) br.close();
         }
+    }
 
-
+    public void write(String txtFile, String txt) throws IOException {
+        BufferedWriter bwr = null;
+        try {
+            File file = new File(txtFile);
+            if (file.createNewFile()) {
+                System.out.println("new file is created");
+            }
+            FileWriter writer = new FileWriter(file);
+            bwr = new BufferedWriter(writer);
+            bwr.write(txt);
+            bwr.newLine();
+            bwr.flush();
+            bwr.close();
+        } catch (IOException e) {
+            System.out.println("An error occured");
+            e.printStackTrace();
+        } finally {
+            if(bwr != null) bwr.close();
+        }
     }
 }
